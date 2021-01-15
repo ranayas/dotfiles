@@ -1,0 +1,10 @@
+#! bin/bash
+
+alias nvimconfig='nvim /home/xirius/.config/nvim/init.vim'
+alias polybarconfig='nvim /home/xirius/.config/polybar/config'
+alias porfi='sudo'
+alias reboot='systemctl reboot'
+alias sail='bash vendor/bin/sail'
+alias shutdown='systemctl poweroff'
+alias vim='nvim'
+alias zshconfig='nvim /home/xirius/.zshrc'
