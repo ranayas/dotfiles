@@ -48,8 +48,5 @@ if [[ $TERM == xterm-termite ]]; then
   __vte_osc7
 fi
 
-# Custom functions
-source $HOME/.config/zsh/functions
-
 # Maven
 export PATH="$HOME/.local/opt/apache-maven-3.6.3/bin:$PATH"
