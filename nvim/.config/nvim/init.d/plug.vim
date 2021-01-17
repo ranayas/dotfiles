@@ -17,6 +17,7 @@ Plug 'honza/vim-snippets' " snippets
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-projectionist'
 Plug 'noahfrederick/vim-composer'
+Plug 'noahfrederick/vim-laravel'
 Plug 'tpope/vim-sleuth' " Auto tab tricks
 Plug 'sheerun/vim-polyglot' " Syntax Highlightings
 Plug 'vim-language-dept/css-syntax.vim'
