@@ -1,8 +1,10 @@
-" Vim-plug plugins
+" vim-plug plugins
 source $HOME/.config/nvim/init.d/plug.vim
-" Coc Extensions
+" coc extensions
 source $HOME/.config/nvim/init.d/coc-extensions.vim
-" Settings
+" settings
 source $HOME/.config/nvim/init.d/settings.vim
-" Key mappings
-source $HOME/.config/nvim/init.d/mappings.vim
+" key maps
+source $HOME/.config/nvim/init.d/maps.vim
+" functions
+source $HOME/.config/nvim/init.d/functions.vim

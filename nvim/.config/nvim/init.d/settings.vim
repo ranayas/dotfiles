@@ -1,10 +1,10 @@
-" +--------+
-" | Custom |
-" +--------+
+" utils {{{
+" fold method
+set foldmethod=marker
 
-set modifiable
-syntax on
+" Ignore uppercase and lowercase
 set ignorecase
+
 " Show line numbers
 set number
 
@@ -34,13 +34,12 @@ set listchars+=trail:·
 
 " Enable cursor blinking
 set guicursor+=a:blinkon100
+"}}}
 
-filetype plugin indent on
-
-autocmd FileType html setlocal shiftwidth=2 softtabstop=2 expandtab
-autocmd FileType javascript setlocal shiftwidth=2 softtabstop=2 expandtab
-autocmd FileType typescript setlocal shiftwidth=2 softtabstop=2 expandtab
-autocmd FileType javascriptreact setlocal shiftwidth=2 softtabstop=2 expandtab
+" coc {{{
+" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" unicode characters in the file autoload/float.vim
+set encoding=utf-8
 
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -59,20 +58,50 @@ set updatetime=300
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-let g:sonokai_style = 'andromeda'
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
 
-" let g:sonokai_transparent_background = 1
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
-syntax on
-colorscheme sonokai " Or whatever colorscheme you make
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Specify to coc what version of node to use.
 let g:coc_node_path = glob('$HOME/.nvm/versions/node/v14.16.0/bin/node')
+"}}}
 
-" +-------------+
-" | vim-airline |
-" +-------------+
+" colorscheme {{{
+let g:sonokai_style = 'andromeda'
+colorscheme sonokai " Or whatever colorscheme you make
+"}}}
 
+" airline {{{
 " Enable vim-airline tab
 let g:airline#extensions#tabline#enabled = 1
 
@@ -84,13 +113,15 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 " Enable powerline fonts in vim-airline
 let g:airline_powerline_fonts = 1
+"}}}
 
-" +--------------+
-" | coc-explorer |
-" +--------------+
+" coc-explorer {{{
 let g:coc_explorer_global_presets = {
 \   '.vim': {
 \     'root-uri': '~/.vim',
+\   },
+\   'cocConfig': {
+\      'root-uri': '~/.config/coc',
 \   },
 \   'tab': {
 \     'position': 'tab',
@@ -119,28 +150,44 @@ let g:coc_explorer_global_presets = {
 \   },
 \   'simplify': {
 \     'file-child-template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
-\   }
+\   },
+\   'buffer': {
+\     'sources': [{'name': 'buffer', 'expand': v:true}]
+\   },
 \ }
+"}}}
 
-" +----------------+
-" | vim-jsx-pretty |
-" +----------------+
+" coc-snippets {{{
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
 
-let g:vim_jsx_pretty_colorful_config = 1
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+let g:coc_snippet_next = '<tab>'
+" }}}
 
-" +--------------+
-" | vim-closetag |
-" +--------------+
+let g:vim_jsx_pretty_colorful_config = 1 " vim-jsx-pretty
+
+" vim-closetag {{{
+" filenames like *.xml, *.html, *.xhtml, ...
+" These are the file extensions where this plugin is enabled.
+"
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml'
+
+" filenames like *.xml, *.xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx'
 
 " filetypes like xml, html, xhtml, ...
 " These are the file types where this plugin is enabled.
 "
-let g:closetag_filetypes = 'html,xhtml,phtml,javascript,javascriptreact'
+let g:closetag_filetypes = 'html,xhtml,phtml'
 
 " filetypes like xml, xhtml, ...
 " This will make the list of non-closing tags self-closing in the specified files.
 "
-let g:closetag_xhtml_filetypes = 'xhtml,javascriptreact,javascript'
+let g:closetag_xhtml_filetypes = 'xhtml,jsx'
 
 " integer value [0|1]
 " This will make the list of non-closing tags case-sensitive (e.g. `<Link>` will be closed while `<link>` won't.)
@@ -151,8 +198,8 @@ let g:closetag_emptyTags_caseSensitive = 1
 " Disables auto-close if not in a "valid" region (based on filetype)
 "
 let g:closetag_regions = {
-    \ 'javascript': 'jsxRegion',
-    \ 'javascriptreact': 'jsxRegion'
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
     \ }
 
 " Shortcut for closing tags, default is '>'
@@ -162,26 +209,16 @@ let g:closetag_shortcut = '>'
 " Add > at current position without closing the current tag, default is ''
 "
 let g:closetag_close_shortcut = '<leader>>'
+"}}}
 
-" 
-" INDENT LINE
-"
-let g:indentLine_char = '|'
-" let g:indentLine_setColors = 0
+let g:indentLine_char = '|' " indentLine
 
-" +-----+
-" | JSX |
-" +-----+
-
-let g:vim_jsx_pretty_colorful_config = 1 " default 0
-
-"
-" emmet
-"
-
+" emmet-vim {{{
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,javascriptreact,javascript EmmetInstall
+autocmd FileType html,css EmmetInstal
+"}}}
 
+" nvim-treesitter {{{
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -190,3 +227,4 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
+" }}}

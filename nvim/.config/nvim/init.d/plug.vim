@@ -25,3 +25,4 @@ Plug 'sainnhe/sonokai' " sonokai theme
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
+
