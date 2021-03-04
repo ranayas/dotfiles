@@ -153,6 +153,12 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>\
 
 xmap <silent> <C-d> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
+
+nmap <silent> <C-c> <Plug>(coc-cursors-position)
+nmap <silent> <C-d> <Plug>(coc-cursors-word)
+xmap <silent> <C-d> <Plug>(coc-cursors-range)
+nmap <leader>x  <Plug>(coc-cursors-operator)
+
 " +--------------+
 " | coc-explorer |
 " +--------------+
@@ -166,15 +172,6 @@ nmap <space>ef :CocCommand explorer --preset floating<CR>
 
 " List all presets
 nmap <space>el :CocList explPresets
-
-" +--------------+
-" | coc-prettier |
-" +--------------+
-
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
 
 """""" COC-SNIPETS 
 " Use <C-l> for trigger snippet expand.

@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-	termite
+	alacritty
 
 #tilix --maximize --window-style=borderless
 # program launcher

@@ -2,8 +2,8 @@
   "npm.binPath": "$HOME/.nvm/versions/node/v14.15.0/bin/npm",
   "prettier.singleQuote": true,
   "prettier.jsxSingleQuote": true,
-  "coc.preferences.formatOnSaveFiletypes": ["javascript", "javascriptreact"
-  ],
+  "prettier.trailingComma": "none",
+  "prettier.requireConfig": true,
   "prettier.arrowParens": "avoid",
   // Explorer
   "explorer.icon.enableNerdfont": true,
