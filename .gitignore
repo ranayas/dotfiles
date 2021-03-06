@@ -168,4 +168,4 @@ tags
 
 # End of https://www.toptal.com/developers/gitignore/api/vim,linux,node,yarn
 
-./nvim/.config/nvim/plugged/
+nvim/.config/nvim/plugged/
