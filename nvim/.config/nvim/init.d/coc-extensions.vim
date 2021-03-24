@@ -1,1 +1,1 @@
-let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-git', 'coc-explorer', 'coc-sh', 'coc-eslint', 'coc-html', 'coc-pairs', 'coc-phpls', 'coc-snippets', 'coc-emoji', 'coc-java', 'coc-jedi', 'coc-css']
+let g:coc_global_extensions = ['coc-tsserver', 'coc-json', 'coc-git', 'coc-explorer', 'coc-sh', 'coc-eslint', 'coc-html', 'coc-pairs', 'coc-phpls', 'coc-snippets', 'coc-emoji', 'coc-java', 'coc-jedi', 'coc-css', 'coc-vetur']
