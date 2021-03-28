@@ -213,7 +213,7 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 "}}}
 
 " colorscheme {{{
-" let g:sonokai_style = 'andromeda'
+let g:sonokai_style = 'andromeda'
 " lua require('xresources')
 colorscheme sonokai " Or whatever colorscheme you make
 "}}}

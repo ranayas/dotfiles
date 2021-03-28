@@ -22,9 +22,11 @@ Plug 'mikelue/vim-maven-plugin' " Maven
 Plug 'editorconfig/editorconfig-vim'
 Plug 'mattn/emmet-vim' " Vim emmet
 Plug 'sainnhe/sonokai' " sonokai theme
+Plug 'tanvirtin/monokai.nvim'
 Plug 'nekonako/xresources-nvim'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'digitaltoad/vim-pug'
+Plug 'metakirby5/codi.vim'
 call plug#end()
 
