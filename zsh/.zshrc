@@ -23,6 +23,9 @@ export PAGER=less
 # Custom aliases.
 source $HOME/.config/zsh/aliases
 
+# Custm functions.
+source $HOME/.config/zsh/functions
+
 # Rust binaries.
 export PATH="$HOME/.cargo/bin:$PATH"
 
