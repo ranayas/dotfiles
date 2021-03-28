@@ -1,10 +1,7 @@
 {
+	"diagnostic.virtualText": true,
+	"diagnostic.virtualTextCurrentLineOnly": false,
 	"npm.binPath": "$HOME/.nvm/versions/node/v14.15.0/bin/npm",
-	"prettier.singleQuote": true,
-	"prettier.jsxSingleQuote": true,
-	"prettier.trailingComma": "none",
-	"prettier.requireConfig": true,
-	"prettier.arrowParens": "avoid",
 	"explorer.icon.enableNerdfont": true,
 	"java.configuration.runtimes": [
 		{

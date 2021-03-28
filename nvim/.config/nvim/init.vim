@@ -217,19 +217,11 @@ let g:sonokai_style = 'andromeda'
 colorscheme sonokai " Or whatever colorscheme you make
 "}}}
 
-" airline {{{
-" Enable vim-airline tab
-let g:airline#extensions#tabline#enabled = 1
-
-" vim-airline-theme
-let g:airline_theme = "sonokai"
-
-" vim-airline tab format
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-
-" Enable powerline fonts in vim-airline
-let g:airline_powerline_fonts = 1
-"}}}
+" lightline {{{
+let g:lightline = {
+  \ 'colorscheme': 'sonokai'
+  \ }
+" }}}
 
 " coc-explorer {{{
 let g:coc_explorer_global_presets = {
@@ -350,7 +342,9 @@ let g:closetag_shortcut = '>'
 let g:closetag_close_shortcut = '<leader>>'
 "}}}
 
-let g:indentLine_char = '|' " indentLine
+let g:indent_blankline_show_current_context = v:true
+let g:indent_blankline_use_treesitter = v:true
+let g:indent_blankline_char = '│'
 
 " emmet-vim {{{
 let g:user_emmet_install_global = 0

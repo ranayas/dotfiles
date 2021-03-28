@@ -1,10 +1,12 @@
 call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Intellisense engine.
 Plug 'hzchirs/vim-material' " vim-material theme.
-Plug 'vim-airline/vim-airline' " Status/tabline.
+Plug 'itchyny/lightline.vim' " Status/tabline.
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'romgrk/barbar.nvim'
 Plug 'ryanoasis/vim-devicons' " Icons.
 Plug 'alvan/vim-closetag' " Autoclose html tags
-Plug 'Yggdroot/indentLine' " Ident line
+Plug 'lukas-reineke/indent-blankline.nvim', {'branch': 'lua'}
 Plug 'honza/vim-snippets' " snippets
 " For vim-laravel
 Plug 'tpope/vim-dispatch'
