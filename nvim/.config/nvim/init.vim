@@ -5,7 +5,7 @@ source $HOME/.config/nvim/init.d/coc-extensions.vim
 
 " utils {{{
 " fold method
-set foldmethod=marker
+" set foldmethod=marker
 
 " Ignore uppercase and lowercase
 set ignorecase
