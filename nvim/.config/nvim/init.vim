@@ -345,6 +345,11 @@ let g:closetag_close_shortcut = '<leader>>'
 let g:indent_blankline_show_current_context = v:true
 let g:indent_blankline_use_treesitter = v:true
 let g:indent_blankline_char = '│'
+let g:indent_blankline_show_first_indent_level = v:true
+let g:indent_blankline_context_patterns = [
+      \'class', 'function', 'method',
+			\ 'if_statement', 'else_clause', 'jsx_element', 'jsx_self_closing_element',
+			\ 'try_statement', 'catch_clause']
 
 " emmet-vim {{{
 let g:user_emmet_install_global = 0
@@ -364,3 +369,5 @@ EOF
 
 " fzf
 nnoremap <Leader>f :Files<CR>
+
+" vim:foldmethod=marker
