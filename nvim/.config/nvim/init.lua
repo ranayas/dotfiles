@@ -5,10 +5,11 @@ vim.cmd('set number')
 vim.cmd('set termguicolors')
 vim.o.t_Co = "256"
 vim.o.updatetime = 300 -- Faster completion
-vim.g.mapleader = ",leader"
+vim.g.mapleader = ","
 vim.cmd('set hidden')
 vim.cmd('set nobackup')
 vim.cmd('set nowritebackup')
+vim.cmd('set ignorecase')
 
 ---[[nvim-lspconfig
 local nvim_lsp = require('lspconfig')
