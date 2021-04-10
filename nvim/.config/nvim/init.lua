@@ -10,6 +10,28 @@ vim.cmd('set hidden')
 vim.cmd('set nobackup')
 vim.cmd('set nowritebackup')
 vim.cmd('set ignorecase')
+vim.o.background = 'dark'
+-- vim.g.colors_name = 'onedark_nvim'
+vim.cmd('imap ii <Esc>')
+vim.cmd('set cmdheight=2')
+
+-- Disable statusline in any mode to replace it with vim-airline
+vim.cmd('set noshowmode')
+
+-- Render listchars
+vim.cmd('set list')
+
+-- Render white spaces with the specified character
+vim.cmd('set listchars+=space:⋅')
+
+-- Render tabs with the specified character
+vim.cmd("set listchars+=tab:→\\ ")
+
+-- Render preview white spaces with the specified character
+vim.cmd('set listchars+=trail:·')
+
+-- Enable cursor blinking
+vim.cmd('set guicursor+=a:blinkon100')
 
 ---[[nvim-lspconfig
 local nvim_lsp = require('lspconfig')
@@ -67,7 +89,7 @@ local on_attach = function(client, bufnr)
       signs = true,
 
       -- delay update diagnostics
-      update_in_insert = true,
+      update_in_insert = false,
     }
   )
 end
@@ -103,38 +125,71 @@ local function setup_servers()
         on_attach(client, bufnr)
         client.resolved_capabilities.document_formatting = false
       end
+
       config.on_attach = on_typescript_attach
     end
 
     if server == 'efm' then
-      local on_typescript_attach = function(client, bufnr)
+      local on_efm_attach = function(client, bufnr)
         on_attach(client, bufnr)
         client.resolved_capabilities.document_formatting = true
       end
-      config.on_attach = on_typescript_attach
-          local prettier = {formatCommand = "prettier --stdin-filepath ${INPUT}", formatStdin = true}
-          local eslint = {
-            lintCommand = "./node_modules/.bin/eslint -f unix --stdin --stdin-filename ${INPUT}",
-            lintIgnoreExitCode = true,
-            lintStdin = true,
-            lintFormats = {"%f:%l:%c: %m"},
-            formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
-            formatStdin = true
-        }
-        config.filetypes = {
-          'javascript'
-        }
-        config.settings = {
-          rootMarkers = {".git/"},
-            languages = {
-                html = {prettier},
-                css = {prettier},
-                json = {prettier},
-                yaml = {prettier},
-                javascriptreact = {prettier, eslint},
-                javascript = {prettier, eslint},
+
+      config.on_attach = on_efm_attach
+
+      local prettier = {
+        formatCommand = "prettier --stdin-filepath ${INPUT}",
+        formatStdin = true
+      }
+
+      local eslint = {
+        lintCommand = "./node_modules/.bin/eslint -f unix --stdin --stdin-filename ${INPUT}",
+        lintIgnoreExitCode = true,
+        lintStdin = true,
+        lintFormats = {"%f:%l:%c: %m"},
+        formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
+        formatStdin = true
+      }
+
+      config.filetypes = {
+        'javascript', 'typescript', 'javascriptreact'
+      }
+
+      config.settings = {
+        rootMarkers = {".git/"},
+          languages = {
+              html = { prettier },
+              css = { prettier },
+              json = { prettier },
+              yaml = { prettier },
+              javascriptreact = { prettier, eslint },
+              javascript = { prettier, eslint },
+              typescript = { prettier, eslint }
+          }
+      }
+    end
+
+    if server == 'json' then
+      config.settings = {
+        json = {
+          schemas = {
+            {
+              fileMatch = ".json",
+              url = "https://json.schemastore.org/package.json"
             }
+          }
         }
+      }
+    end
+
+    if server == 'lua' then
+      config.settings = {
+        Lua = {
+          diagnostics = {
+            globals = { 'vim' }
+          }
+        }
+      }
     end
 
     -- if server == "sourcekit" then
@@ -281,5 +336,53 @@ end
 
 
 remap('i' , '<CR>','v:lua.MUtils.completion_confirm()', {expr = true , noremap = true})
-npairs.setup()
+require('nvim-autopairs').setup()
 --nvim-autopairs]]
+
+---nvim-treesitter[[
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { "c", "rust" },  -- list of language that will be disabled
+  },
+}
+--]]
+
+---nvim-ts-rainbow[[
+require'nvim-treesitter.configs'.setup {
+  rainbow = {
+    enable = true,
+    extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
+  }
+}
+--]]
+
+---nvim-ts-context-commentstring[[
+require'nvim-treesitter.configs'.setup {
+  context_commentstring = {
+    enable = true
+  }
+}
+--]]
+
+---nvim-ts-autotag[[
+require'nvim-treesitter.configs'.setup {
+  autotag = {
+    enable = true,
+  }
+}
+--]]
+
+---nvim-comment[[
+require('nvim_comment').setup()
+--]]
+
+---nvim-colorizer.lua[[
+require'colorizer'.setup()
+--]]
+
+---galaxyline[[
+require('galaxy-line')
+--]]
