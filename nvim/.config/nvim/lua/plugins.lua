@@ -51,7 +51,6 @@ require('packer').startup(function ()
       require('gitsigns').setup()
     end
   }
-  use 'f-person/git-blame.nvim'
   use {
     'glepnir/galaxyline.nvim',
      branch = 'main',
@@ -59,4 +58,18 @@ require('packer').startup(function ()
   }
   use 'romgrk/barbar.nvim'
   use 'metakirby5/codi.vim'
+  use {
+    'lukas-reineke/indent-blankline.nvim',
+    branch = 'lua'
+  }
+  use 'editorconfig/editorconfig-vim'
+  use 'akinsho/nvim-toggleterm.lua'
+  use {
+    'prettier/vim-prettier',
+    run = 'yarn install'
+  }
+  use {
+    'NTBBloodbath/rest.nvim',
+    requires = { 'nvim-lua/plenary.nvim' }
+  }
 end)

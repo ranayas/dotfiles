@@ -19,13 +19,6 @@ export EDITOR="nvim"
 export BROWSER="google-chrome"
 export VISUAL=nvim
 export PAGER=less
-
-# Custom aliases.
-source $HOME/.config/zsh/aliases
-
-# Custm functions.
-source $HOME/.config/zsh/functions
-
 # Rust binaries.
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -44,6 +37,13 @@ export PATH="$HOME/.local/bin:$PATH"
 # Load Node Version Manager
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# Custom aliases.
+source $HOME/.config/zsh/aliases
+
+# Custm functions.
+source $HOME/.config/zsh/functions
+
 
 # Source vte.sh if current terminal is termite
 if [[ $TERM == xterm-termite ]]; then

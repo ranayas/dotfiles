@@ -81,10 +81,7 @@ local on_attach = function(client, bufnr)
   end
 
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics, {
-      -- disable virtual text
-      virtual_text = true;
-
+    vim.lsp.diagnostic.on_publish_diagnostics, { -- disable virtual text virtual_text = true;
       -- show signs
       signs = true,
 
@@ -129,45 +126,131 @@ local function setup_servers()
       config.on_attach = on_typescript_attach
     end
 
-    if server == 'efm' then
-      local on_efm_attach = function(client, bufnr)
-        on_attach(client, bufnr)
-        client.resolved_capabilities.document_formatting = true
-      end
-
-      config.on_attach = on_efm_attach
-
-      local prettier = {
-        formatCommand = "prettier --stdin-filepath ${INPUT}",
-        formatStdin = true
-      }
-
-      local eslint = {
-        lintCommand = "./node_modules/.bin/eslint -f unix --stdin --stdin-filename ${INPUT}",
-        lintIgnoreExitCode = true,
-        lintStdin = true,
-        lintFormats = {"%f:%l:%c: %m"},
-        formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
-        formatStdin = true
-      }
+    if server == 'diagnosticls' then
+      -- local on_diagnosticls_attach = function(client, bufnr)
+      --   on_attach(client, bufnr)
+      --   client.resolved_capabilities.document_formatting = true
+      -- end
 
       config.filetypes = {
-        'javascript', 'typescript', 'javascriptreact'
+        "sh",
+        'javascript',
+        'javascriptreact',
+        'typescript'
       }
-
-      config.settings = {
-        rootMarkers = {".git/"},
-          languages = {
-              html = { prettier },
-              css = { prettier },
-              json = { prettier },
-              yaml = { prettier },
-              javascriptreact = { prettier, eslint },
-              javascript = { prettier, eslint },
-              typescript = { prettier, eslint }
-          }
+      config.init_options = {
+        linters = {
+          eslint = {
+            command = './node_modules/.bin/eslint',
+            rootPatterns = { '.git', '.eslintrc.json', '.eslintrc', '.eslinrc.js' },
+            debounce = 100,
+            args = {
+              '--stdin',
+              '--stdin-filename',
+              '%filepath',
+              '--format',
+              'json'
+            },
+            sourceName = 'eslint',
+            parseJson = {
+              errorsRoot = '[0].messages',
+              line = 'line',
+              column = 'column',
+              endLine = 'endLine',
+              endColumn = 'endColumn',
+              message = '${message} [${ruleId}]',
+              security = 'severity'
+            },
+            securities = {
+              ['1'] = 'warning',
+              ['2'] = 'error'
+            }
+          },
+          shellcheck = {
+            command = "shellcheck", -- brew install shellcheck
+            debounce = 100,
+            args = { "--format=gcc", "-" },
+            offsetLine = 0,
+            offsetColumn = 0,
+            sourceName = "shellcheck",
+            formatLines = 1,
+            formatPattern = {
+              "^[^:]+:(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
+              {
+                line = 1,
+                column = 2,
+                message = 4,
+                security = 3
+              }
+            },
+            securities = {
+              error = "error",
+              warning = "warning",
+              note = "info"
+            }
+          },
+        },
+        formatters = {
+          prettierEslint = {
+            command = 'prettier-eslint',
+            args = {
+              '--stdin-filepath'
+            },
+            rootPatterns = { '.git' },
+          },
+        },
+        filetypes = {
+          sh = "shellcheck",
+          javascript = 'eslint',
+          javascriptreact = 'eslint',
+          typescript = 'eslint'
+        },
+        formatFiletypes = {
+          javascript = 'prettierEslint',
+          javascriptreact = 'prettierEslint'
+        }
       }
     end
+
+--     if server == 'efm' then
+--       local on_efm_attach = function(client, bufnr)
+--         on_attach(client, bufnr)
+--         client.resolved_capabilities.document_formatting = true
+--       end
+-- 
+--       config.on_attach = on_efm_attach
+-- 
+--       local prettier = {
+--         formatCommand = "prettier --stdin-filepath ${INPUT}",
+--         formatStdin = true
+--       }
+-- 
+--       local eslint = {
+--         lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
+--         lintIgnoreExitCode = true,
+--         lintStdin = true,
+--         lintFormats = {"%f:%l:%c: %m"},
+--         formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
+--         formatStdin = true
+--       }
+-- 
+--       config.filetypes = {
+--         'javascript', 'typescript', 'javascriptreact'
+--       }
+-- 
+--       config.settings = {
+--         rootMarkers = {".git/"},
+--           languages = {
+--               html = { prettier },
+--               css = { prettier },
+--               json = { prettier },
+--               yaml = { prettier },
+--               javascriptreact = { prettier, eslint },
+--               javascript = { prettier, eslint },
+--               typescript = { prettier, eslint }
+--           }
+--       }
+--     end
 
     if server == 'json' then
       config.settings = {
@@ -214,6 +297,63 @@ end
 --nvim-lspinstall]]
 --nvim-lspconfig]]
 
+-- nvim_lsp.diagnosticls.setup({
+--   filetypes={
+--     'javascript',
+--     'javascriptreact',
+--     'typescript'
+--   },
+--   init_options = {
+--     linters = {
+--       eslint = {
+--         command = './node_modules/.bin/eslint',
+--         rootPatterns = { '.git' },
+--         debounce = 100,
+--         args = {
+--           '--stdin',
+--           '--stdin-filename',
+--           '%filepath',
+--           '--format',
+--           'json'
+--         },
+--         sourceName = 'eslint',
+--         parseJson = {
+--           errorsRoot = '[0].messages',
+--           line = 'line',
+--           column = 'column',
+--           endLine = 'endLine',
+--           endColumn = 'endColumn',
+--           message = '${message} [${ruleId}]',
+--           security = 'severity'
+--         },
+--         securities = {
+--           ['1'] = 'warning',
+--           ['2'] = 'error',
+--         },
+--       },
+--     },
+--     filetypes = {
+--       javascript = 'eslint',
+--       javascriptreact = 'eslint',
+--     },
+--     formatters = {
+--       prettierEslint = {
+--         command = './node_modules/.bin/prettier-eslint',
+--         args = {
+--           '--stdin',
+--           '--single-quote',
+--           '--print-width',
+--           '120',
+--         },
+--         rootPatterns = { '.git' },
+--       },
+--     },
+--     formatFiletypes = {
+--       javascript = 'prettierEslint',
+--       javascriptreact = 'prettierEslint',
+--     },
+--   },
+-- })
 ---[[nvim-compe
 vim.cmd('set shortmess+=c')
 vim.o.completeopt = "menuone,noselect"
@@ -307,36 +447,39 @@ vim.api.nvim_set_keymap('n', '<leader>fh','<cmd>lua require(\'telescope.builtin\
 --telescope]]
 
 ---nvim-tree.lua[[
+local color = require('xresources')
+vim.g.nvim_tree_lsp_diagnostics = 1
 vim.cmd('nnoremap <C-n> :NvimTreeToggle<CR>')
 vim.cmd('nnoremap <leader>r :NvimTreeRefresh<CR>')
 vim.cmd('nnoremap <leader>n :NvimTreeFindFile<CR>')
+vim.cmd('highlight NvimTreeEmptyFolderName guifg=' .. color.cyan)
+vim.cmd('highlight NvimTreeOpenedFolderName guifg=' .. color.cyan)
+-- vim.cmd('highlight NvimTreeLspDiagnostics guifg=' .. color.red)
 --nvim-tree.lua]]
 
 ---[[nvim-autopairs
 local remap = vim.api.nvim_set_keymap
 local npairs = require('nvim-autopairs')
+
 -- skip it, if you use another global object
 _G.MUtils= {}
 
-vim.g.completion_confirm_key = ""
+vim.g.completion_confirm_key = "<CR>"
 MUtils.completion_confirm=function()
   if vim.fn.pumvisible() ~= 0  then
     if vim.fn.complete_info()["selected"] ~= -1 then
-      vim.fn["compe#confirm"]()
-      return npairs.esc("")
+      return vim.fn["compe#confirm"](npairs.esc("<c-r>"))
     else
-      vim.api.nvim_select_popupmenu_item(0, false, false, {})
-      vim.fn["compe#confirm"]()
-      return npairs.esc("<c-n>")
+      return npairs.esc("<cr>")
     end
   else
-    return npairs.check_break_line_char()
+    return npairs.autopairs_cr()
   end
 end
 
 
 remap('i' , '<CR>','v:lua.MUtils.completion_confirm()', {expr = true , noremap = true})
-require('nvim-autopairs').setup()
+npairs.setup()
 --nvim-autopairs]]
 
 ---nvim-treesitter[[
@@ -353,8 +496,17 @@ require'nvim-treesitter.configs'.setup {
 ---nvim-ts-rainbow[[
 require'nvim-treesitter.configs'.setup {
   rainbow = {
+    colors = {
+      color.red,
+      color.green,
+      color.yellow,
+      color.blue,
+      color.purple,
+      color.cyan,
+      color.white
+    },
     enable = true,
-    extended_mode = true, -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
+    extended_mode = true -- Highlight also non-parentheses delimiters, boolean or table: lang -> boolean
   }
 }
 --]]
@@ -386,3 +538,50 @@ require'colorizer'.setup()
 ---galaxyline[[
 require('galaxy-line')
 --]]
+
+---barbar[[
+vim.cmd('nnoremap <silent>    <A-,> :BufferPrevious<CR>')
+vim.cmd('nnoremap <silent>    <A-.> :BufferNext<CR>')
+vim.cmd('nnoremap <silent>    <A-<> :BufferMovePrevious<CR>')
+vim.cmd('nnoremap <silent>    <A->> :BufferMoveNext<CR>')
+vim.cmd('nnoremap <silent>    <A-1> :BufferGoto 1<CR>')
+vim.cmd('nnoremap <silent>    <A-2> :BufferGoto 2<CR>')
+vim.cmd('nnoremap <silent>    <A-3> :BufferGoto 3<CR>')
+vim.cmd('nnoremap <silent>    <A-4> :BufferGoto 4<CR>')
+vim.cmd('nnoremap <silent>    <A-5> :BufferGoto 5<CR>')
+vim.cmd('nnoremap <silent>    <A-6> :BufferGoto 6<CR>')
+vim.cmd('nnoremap <silent>    <A-7> :BufferGoto 7<CR>')
+vim.cmd('nnoremap <silent>    <A-8> :BufferGoto 8<CR>')
+vim.cmd('nnoremap <silent>    <A-9> :BufferLast<CR>')
+vim.cmd('nnoremap <silent>    <A-c> :BufferClose<CR>')
+vim.cmd('nnoremap <silent> <C-s>    :BufferPick<CR>')
+vim.cmd('nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>')
+vim.cmd('nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>')
+--]]
+
+vim.cmd([[
+  let bufferline = get(g:, 'bufferline', {})
+  let bufferline.animation = v:false
+]])
+
+---indent-blankline.nvim[[
+vim.g.indent_blankline_char = '▏'
+vim.g.indent_blankline_show_trailing_blankline_indent = false
+vim.g.indent_blankline_show_current_context = true
+vim.g.indent_blankline_context_patterns = {'class', 'function', 'method', '^if', '^while', '^for', '^object', '^table', 'block'}
+vim.g.indent_blankline_char_highlight_list = { 'Function', 'Type', 'String', 'Comment', 'Number' }
+--]]
+
+---nvim-toggleterm.lua[[
+require("toggleterm").setup{
+  open_mapping = [[<C-t>]],
+  shading_factor = 0,
+  hide_numbers = true,
+  direction= 'horizontal',
+  start_in_insert = false,
+  persist_size = true,
+  close_on_exit = true,
+}
+--]]
+
+vim.cmd("tnoremap <Esc> <C-\\><C-n>")
