@@ -36,12 +36,13 @@ module-margin-right = 1
 font-0 = terminus:size=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 font-2 = siji:pixelsize=10;1
-font-3 = FontAwesome5Free:size=10;2
-font-4 = FontAwesome5FreeSolid:size=10;2
+font-3 = FontAwesome5Free:size=10;3
+font-4 = FontAwesome5FreeSolid:size=10;3
+font-5 = Iosevka Fixed:size=30;7
 
 modules-left = menu bspwm
 modules-center = title
-modules-right = pulseaudio memory cpu temperature date
+modules-right = pulseaudio memory cpu date
 
 tray-position = right
 tray-padding = 2
@@ -71,6 +72,34 @@ content = ""
 click-left = rofi -show drun
 label-active-font = 3
 content-padding = 0
+
+[module/close]
+type = custom/text
+content = "•"
+content-foreground = ${colors.primary}
+click-left = bspc node -k
+content-font = 6
+content-padding = 0
+label-padding = 0
+format-padding = 0
+
+[module/maximize]
+type = custom/text
+content = "•"
+click-left = bspc node -k
+content-font = 6
+content-padding = 0
+label-padding = 0
+format-padding = 0
+
+[module/minimize]
+type = custom/text
+content = "•"
+click-left = bspc node -k
+content-font = 6
+content-padding = 0
+label-padding = 0
+format-padding = 0
 
 [module/xkeyboard]
 type = internal/xkeyboard
