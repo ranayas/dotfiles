@@ -1,5 +1,7 @@
+local lsp_config = {}
+
 -- keymaps
-local function on_attach(client, bufnr)
+function lsp_config.on_attach(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
@@ -52,14 +54,9 @@ local function on_attach(client, bufnr)
 end
 
 -- config that activates keymaps and enables snippet support
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport =
+lsp_config.capabilities = vim.lsp.protocol.make_client_capabilities()
+lsp_config.capabilities.textDocument.completion.completionItem.snippetSupport = true
+lsp_config.capabilities.textDocument.completion.completionItem.resolveSupport =
   {properties = {'documentation', 'detail', 'additionalTextEdits'}}
 
-return {
-  -- enable snippet support
-  capabilities = capabilities,
-  -- map buffer local keybindings when the language server attaches
-  on_attach = on_attach
-}
+return lsp_config

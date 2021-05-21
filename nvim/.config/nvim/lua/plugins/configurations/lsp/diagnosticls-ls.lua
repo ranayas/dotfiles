@@ -1,11 +1,5 @@
-local config = require('plugins/configurations/lsp-config')
-
-local diagnosticls = vim.fn.stdpath('data') ..
-                       '/lspinstall/diagnosticls/node_modules/.bin/diagnostic-languageserver'
-
-require'lspconfig'.diagnosticls.setup {
-  cmd = {diagnosticls, '--stdio'},
-  filetypes = {
+return function(config)
+  config.filetypes = {
     'javascript',
     'javascriptreact',
     'javascript.jsx',
@@ -15,8 +9,8 @@ require'lspconfig'.diagnosticls.setup {
     'html',
     'sh',
     'css'
-  },
-  init_options = {
+  }
+  config.init_options = {
     linters = {
       eslint = {
         command = './node_modules/.bin/eslint',
@@ -88,7 +82,6 @@ require'lspconfig'.diagnosticls.setup {
       html = 'prettier',
       css = 'prettier'
     }
-  },
-  on_attach = config.on_attach,
-  capabilities = config.capabilities
-}
+  }
+  return config
+end
