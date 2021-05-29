@@ -1,4 +1,3 @@
-vim.wo.number = true
 vim.o.termguicolors = true
 vim.o.t_Co = '256'
 vim.o.updatetime = 300
@@ -13,6 +12,7 @@ vim.o.fileencoding = 'utf-8' -- The encoding written to file
 vim.o.conceallevel = 0 -- So that I can see `` in markdown files
 vim.bo.smartindent = true -- Makes indenting smart
 vim.wo.wrap = true
+vim.bo.smartindent = true
 vim.cmd('set list')
 vim.cmd('set listchars+=space:⋅') -- Render white spaces with the specified character
 vim.cmd('set listchars+=tab:→\\ ') -- Render tabs with the specified character
@@ -22,3 +22,5 @@ vim.cmd('syntax on') -- syntax highlighting
 vim.cmd('set iskeyword+=-') -- treat dash separated words as a word text object"
 vim.cmd('set shortmess+=c') -- Don't pass messages to |ins-completion-menu|.
 vim.cmd('set inccommand=split') -- Make substitution work in realtime
+vim.cmd('set number')
+vim.cmd('set wrap linebreak')

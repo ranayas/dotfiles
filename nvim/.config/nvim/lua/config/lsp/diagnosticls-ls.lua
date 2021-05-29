@@ -6,9 +6,7 @@ return function(config)
     'typescript',
     'typescriptreact',
     'typescript.tsx',
-    'html',
     'sh',
-    'css'
   }
   config.init_options = {
     linters = {
@@ -83,5 +81,4 @@ return function(config)
       css = 'prettier'
     }
   }
-  return config
 end

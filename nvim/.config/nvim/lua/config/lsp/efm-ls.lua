@@ -1,4 +1,4 @@
-return function(config)
+return function (config)
   config.init_options = {documentFormatting = true, codeAction = false}
   config.filetypes = {'lua'}
   config.settings = {
@@ -14,5 +14,4 @@ return function(config)
       }
     }
   }
-  return config
 end
