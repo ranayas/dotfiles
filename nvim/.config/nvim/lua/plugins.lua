@@ -6,7 +6,7 @@ return require('packer').startup(function(use)
     requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
   use 'nekonako/xresources-nvim'
-  -- use 'sheerun/vim-polyglot'
+  use 'sheerun/vim-polyglot'
   use 'neovim/nvim-lspconfig'
   use {'kabouzeid/nvim-lspinstall', requires = 'neovim/nvim-lspconfig'}
   use 'hrsh7th/nvim-compe'
@@ -20,7 +20,7 @@ return require('packer').startup(function(use)
   use 'JoosepAlviste/nvim-ts-context-commentstring'
   use {'p00f/nvim-ts-rainbow'}
   use 'steelsojka/pears.nvim'
-  -- use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
+  use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
   use 'windwp/nvim-ts-autotag'
   use {
     'romgrk/barbar.nvim',

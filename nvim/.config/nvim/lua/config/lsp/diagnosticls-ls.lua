@@ -6,7 +6,8 @@ return function(config)
     'typescript',
     'typescriptreact',
     'typescript.tsx',
-    'sh',
+    'html',
+    'sh'
   }
   config.init_options = {
     linters = {
@@ -66,16 +67,16 @@ return function(config)
       javascript = 'eslint',
       javascriptreact = 'eslint',
       ['javascript.jsx'] = 'eslint',
+      typescript = 'eslint',
       ['typescript.tsx'] = 'eslint',
-      typepscript = 'eslint',
       typescriptreact = 'eslint'
     },
     formatFiletypes = {
       javascript = 'prettier',
       javascriptreact = 'prettier',
       ['javascript.jsx'] = 'prettier',
+      typescript = 'prettier',
       ['typescript.jsx'] = 'prettier',
-      typepscript = 'prettier',
       typescriptreact = 'prettier',
       html = 'prettier',
       css = 'prettier'

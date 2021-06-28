@@ -13,5 +13,5 @@ vim.g.indent_blankline_context_patterns =
     '^table',
     'block'
   }
-vim.g.indent_blankline_char_highlight_list =
-  {'Function', 'Type', 'String', 'Comment', 'Number'}
+-- vim.g.indent_blankline_char_highlight_list =
+--   {'Function', 'Type', 'String', 'Comment', 'Number'}

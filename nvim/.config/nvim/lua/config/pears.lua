@@ -6,5 +6,4 @@ require'pears'.setup(function(conf)
       pears_handle()
     end
   end)
-  conf.preset "tag_matching"
 end)
