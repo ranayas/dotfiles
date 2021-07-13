@@ -7,6 +7,7 @@ return function(config)
     'typescriptreact',
     'typescript.tsx',
     'html',
+    'css',
     'sh'
   }
   config.init_options = {

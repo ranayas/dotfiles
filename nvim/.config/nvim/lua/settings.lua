@@ -23,3 +23,4 @@ vim.cmd('set shortmess+=c') -- Don't pass messages to |ins-completion-menu|.
 vim.cmd('set inccommand=split') -- Make substitution work in realtime
 vim.cmd('set number')
 vim.cmd('set wrap linebreak')
+vim.wo.rnu = true

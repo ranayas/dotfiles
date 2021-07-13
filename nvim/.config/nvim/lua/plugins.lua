@@ -20,7 +20,7 @@ return require('packer').startup(function(use)
   use 'JoosepAlviste/nvim-ts-context-commentstring'
   use {'p00f/nvim-ts-rainbow'}
   use 'steelsojka/pears.nvim'
-  use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
+  use {'lukas-reineke/indent-blankline.nvim'}
   use 'windwp/nvim-ts-autotag'
   use {
     'romgrk/barbar.nvim',
@@ -34,7 +34,7 @@ return require('packer').startup(function(use)
   use 'editorconfig/editorconfig-vim'
   use 'andrejlevkovitch/vim-lua-format'
   use 'akinsho/nvim-toggleterm.lua'
-  use 'lewis6991/gitsigns.nvim'
+  use {'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}}
   use 'norcalli/nvim-colorizer.lua'
   use 'folke/lua-dev.nvim'
   use {'rafamadriz/friendly-snippets'}
