@@ -31,6 +31,6 @@ feh --bg-fill $HOME/Imágenes/zelda.jpg &
 compton &
 dunst &
 polybar -r example &
-redshift -O 3000 &
+redshift -O 4000 &
 xautolock -time 10 -locker "i3lock -c 000000 && sleep 10 && xset s activate" &
 unclutter &
