@@ -43,4 +43,8 @@ return require('packer').startup(function(use)
   use 'mattn/emmet-vim'
   use {'prettier/vim-prettier', run = 'npm install'}
   use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'}
+  use {
+    'airblade/vim-rooter',
+    config = function() vim.g.rooter_silent_chdir = 1 end
+  }
 end)
